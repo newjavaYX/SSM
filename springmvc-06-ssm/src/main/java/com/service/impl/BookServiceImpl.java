@@ -2,6 +2,9 @@ package com.service.impl;
 
 import com.dao.BookDao;
 import com.domain.Book;
+import com.domain.Code;
+import com.exception.BusinessException;
+import com.exception.SystemException;
 import com.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +43,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book getBookById(Integer id) {
-        return bookDao.getBookById(id);
+        if (id<0){
+            throw new BusinessException("非法数据",Code.BUS_ERR);
+        }
+        try {
+            return bookDao.getBookById(id);
+        }catch (Exception e) {
+            throw new SystemException("系统出错",e,Code.RUN_ERR);
+        }
     }
 
     @Override
