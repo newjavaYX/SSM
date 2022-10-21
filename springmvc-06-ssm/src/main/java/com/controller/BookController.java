@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.domain.Book;
+import com.domain.Code;
 import com.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,27 +14,36 @@ public class BookController {
     @Autowired
     private BookService service;
     @PostMapping
-    public boolean save(@RequestBody Book book) {
-        return service.save(book);
+    public Result save(@RequestBody Book book) {
+        boolean flag = service.save(book);
+        return new Result(flag ? Code.SAVE_OK : Code.SAVE_ERR,flag);
     }
 
     @PutMapping
-    public boolean update(@RequestBody Book book) {
-        return service.update(book);
+    public Result update(@RequestBody Book book) {
+        boolean flag = service.update(book);
+        return new Result(flag ? Code.UPDATE_OK : Code.UPDATE_ERR,flag);
     }
 
     @DeleteMapping("/{id}")
-    public boolean deleteById(@PathVariable Integer id) {
-        return service.deleteById(id);
+    public Result deleteById(@PathVariable Integer id) {
+        boolean flag = service.deleteById(id);
+        return new Result(flag ? Code.DELETE_OK : Code.DELETE_ERR,flag);
     }
 
     @GetMapping("/{id}")
-    public Book getBookById(@PathVariable Integer id) {
-        return service.getBookById(id);
+    public Result getBookById(@PathVariable Integer id) {
+        Book book = service.getBookById(id);
+        Integer code = book != null ? Code.GET_OK : Code.GET_REE;
+        String msg =  book != null ? "": "数据查询失败";
+        return new Result(code,book,msg);
     }
 
     @GetMapping
-    public List<Book> getAllBook() {
-        return service.getAllBook();
+    public Result getAllBook() {
+        List<Book> bookList = service.getAllBook();
+        Integer code = bookList != null ? Code.GET_OK : Code.GET_REE;
+        String msg =  bookList != null ? "": "数据查询失败";
+        return new Result(code,bookList,msg);
     }
 }
