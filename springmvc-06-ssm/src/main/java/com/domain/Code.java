@@ -13,4 +13,5 @@ public class Code {
 
     public static final Integer RUN_ERR = 50001;
     public static final Integer BUS_ERR = 50011;
+    public static final Integer UNKOWN_ERR = 500;
 }

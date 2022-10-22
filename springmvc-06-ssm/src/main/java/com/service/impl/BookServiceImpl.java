@@ -17,7 +17,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public boolean save(Book book) {
         Integer i = bookDao.save(book);
-        if (i != null && i !=0) {
+        if (i != null && i>0) {
             return true;
         }
         return false;
@@ -49,7 +49,7 @@ public class BookServiceImpl implements BookService {
         try {
             return bookDao.getBookById(id);
         }catch (Exception e) {
-            throw new SystemException("系统出错",e,Code.RUN_ERR);
+            throw new SystemException("非法数据",e,Code.RUN_ERR);
         }
     }
 

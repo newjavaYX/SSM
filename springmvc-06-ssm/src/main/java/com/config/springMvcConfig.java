@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
-@ComponentScan({"com.controller"})
+@ComponentScan({"com.controller","com.config"})
 @EnableWebMvc
 public class springMvcConfig {
 }
